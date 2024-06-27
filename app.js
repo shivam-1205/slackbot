@@ -1,5 +1,6 @@
 const { App } = require("@slack/bolt");
-
+const express = require("express")
+const expressApp = express();
 require("dotenv").config();
 
 const app = new App({
@@ -158,4 +159,9 @@ app.action("reject_action", async ({ ack, say, body, client }) => {
         text: `Your request for "${approvalRequest}" got rejected by ${body.user.name}`,
         channel: requesterId
     })
+});
+
+// running express app
+expressApp.listen(3001, () => {
+    console.log('Express server running');
 });
