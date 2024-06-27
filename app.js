@@ -165,6 +165,6 @@ expressApp.get("/", (req, res) => {
 });
 
 // running express app
-expressApp.listen(3001, () => {
+expressApp.listen(process.env.PORT || 3001, () => {
     console.log("Express server running");
 });
