@@ -21,7 +21,8 @@ const app = new App({
 app.command("/approval-test", async ({ ack, body, client, logger }) => {
     // Acknowledge the command request
     await ack();
-
+    // logging for acknowledge
+    console.log('/approval-test command received');
     try {
         const result = await client.views.open({
             // Pass a valid trigger_id within 3 seconds of receiving it
@@ -30,7 +31,7 @@ app.command("/approval-test", async ({ ack, body, client, logger }) => {
             view: {
                 type: "modal",
                 // View identifier
-                callback_id: "view_1",
+                callback_id: "approval_modal",
                 title: {
                     type: "plain_text",
                     text: "Approval Test",
@@ -75,7 +76,7 @@ app.command("/approval-test", async ({ ack, body, client, logger }) => {
 });
 
 // listening to modal view
-app.view("view_1", async ({ ack, body, client, view, logger }) => {
+app.view("approval_modal", async ({ ack, body, client, view, logger }) => {
     // Acknowledge the command request
     await ack();
 
