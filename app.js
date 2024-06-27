@@ -1,5 +1,5 @@
 const { App } = require("@slack/bolt");
-const express = require("express")
+const express = require("express");
 const expressApp = express();
 require("dotenv").config();
 
@@ -23,7 +23,7 @@ app.command("/approval-test", async ({ ack, body, client, logger }) => {
     // Acknowledge the command request
     await ack();
     // logging for acknowledge
-    console.log('/approval-test command received');
+    console.log("/approval-test command received");
     try {
         const result = await client.views.open({
             // Pass a valid trigger_id within 3 seconds of receiving it
@@ -90,7 +90,6 @@ app.view("approval_modal", async ({ ack, body, client, view, logger }) => {
         const approvalInputText =
             view["state"]["values"]["input_c"]["approval_input"]["value"];
 
-
         // create approval, rejection view and send to selected user
         client.chat.postMessage({
             blocks: [
@@ -142,11 +141,11 @@ app.action("approve_action", async ({ ack, say, body, client }) => {
     await ack();
     await say("Request approved 👍");
     const requesterId = body.message.text.match(/<@(.*?)>/)[1];
-    const approvalRequest = body.message.text.split(':')[1];
+    const approvalRequest = body.message.text.split(":")[1];
     await client.chat.postMessage({
         text: `Your request for "${approvalRequest}" got approved by ${body.user.name}`,
-        channel: requesterId
-    })
+        channel: requesterId,
+    });
 });
 
 // listen to action
@@ -154,14 +153,18 @@ app.action("reject_action", async ({ ack, say, body, client }) => {
     await ack();
     await say("Request rejected");
     const requesterId = body.message.text.match(/<@(.*?)>/)[1];
-    const approvalRequest = body.message.text.split(':')[1];
+    const approvalRequest = body.message.text.split(":")[1];
     await client.chat.postMessage({
         text: `Your request for "${approvalRequest}" got rejected by ${body.user.name}`,
-        channel: requesterId
-    })
+        channel: requesterId,
+    });
+});
+
+expressApp.get("/", (req, res) => {
+    res.send("Express server running for slack app ⚡️");
 });
 
 // running express app
 expressApp.listen(3001, () => {
-    console.log('Express server running');
+    console.log("Express server running");
 });
