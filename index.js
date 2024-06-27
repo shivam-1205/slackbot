@@ -14,7 +14,7 @@ const app = new App({
     // Start your app
     await app.start();
 
-    console.log("⚡️ Bolt app is running!");
+    console.log("⚡️ Slack Bolt app is running!");
 })();
 
 // sending modal
